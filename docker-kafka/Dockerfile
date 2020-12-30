@@ -4,15 +4,14 @@ ARG corretto_version=15.0.1.9-1
 
 SHELL ["/bin/sh", "-e", "-u", "-x", "-c"]
 
-RUN set -eux \
-    && apt-get update \
+RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         curl ca-certificates gnupg software-properties-common fontconfig java-common \
     && curl -fL https://apt.corretto.aws/corretto.key | apt-key add - \
     && add-apt-repository 'deb https://apt.corretto.aws stable main' \
     && mkdir -p /usr/share/man/man1 || true \
     && apt-get update \
-    && apt-get install -y java-15-amazon-corretto-jdk=1:$version \
+    && apt-get install -y java-15-amazon-corretto-jdk=1:$corretto_version \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
         curl gnupg software-properties-common
 
