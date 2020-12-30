@@ -27,4 +27,3 @@ jobs:
         push: true
         tags: |
             yvlasenko/kafka:latest
-            yvlasenko/kafka:$(date +%s)
