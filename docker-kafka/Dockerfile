@@ -2,7 +2,7 @@ FROM ubuntu:20.04
 
 ARG corretto_version=15.0.1.9-1
 
-SHELL ['/bin/sh', '-e', '-u', '-x', '-c']
+SHELL ["/bin/sh", "-e", "-u", "-x", "-c"]
 
 RUN set -eux \
     && apt-get update \
