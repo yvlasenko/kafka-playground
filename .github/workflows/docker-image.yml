@@ -15,7 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build docker-kafka/ --file Dockerfile --tag kafka:$(date +%s)
+      working-directory: docker-kafka
+      run: docker build . --file Dockerfile --tag kafka:$(date +%s)
     - name: Push to Docker Hub
       uses: docker/build-push-action@v2
       with:
