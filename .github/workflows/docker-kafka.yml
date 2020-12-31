@@ -1,0 +1,34 @@
+name: Docker Image CI - kafka
+
+on:
+  push:
+    paths:
+      - 'docker-kafka/**'
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: yvlasenko
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Build the Docker image
+      working-directory: docker-kafka/
+      run: |
+        docker build . --file Dockerfile --tag yvlasenko/kafka:$(grep -oP 'KAFKA_VERSION=\K(.*)' Dockerfile)
+        docker build . --file Dockerfile --tag yvlasenko/kafka:latest
+
+    - name: Docker Push
+      working-directory: docker-kafka/
+      run: docker push yvlasenko/kafka
