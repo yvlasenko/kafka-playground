@@ -26,7 +26,7 @@ jobs:
     - name: Build the Docker image
       working-directory: docker-corretto/
       run: |
-        docker build . --file Dockerfile --tag yvlasenko/corretto:$(date +%s)
+        docker build . --file Dockerfile --tag yvlasenko/corretto:$(grep -oP 'CORRETTO_VERSION=\K(.*)' Dockerfile)
         docker build . --file Dockerfile --tag yvlasenko/corretto:latest
 
     - name: Docker Push
