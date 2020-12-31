@@ -1,0 +1,34 @@
+name: Docker Image CI - scala
+
+on:
+  push:
+    paths:
+      - 'docker-scala/**'
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: yvlasenko
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Build the Docker image
+      working-directory: docker-scala/
+      run: |
+        docker build . --file Dockerfile --tag yvlasenko/scala:$(grep -oP 'SCALA_VERSION=\K(.*)' Dockerfile)
+        docker build . --file Dockerfile --tag yvlasenko/scala:latest
+
+    - name: Docker Push
+      working-directory: docker-scala/
+      run: docker push yvlasenko/scala
