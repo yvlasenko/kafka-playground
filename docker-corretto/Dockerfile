@@ -14,7 +14,6 @@ RUN apt-get update \
         wget \
     && wget -qO- https://apt.corretto.aws/corretto.key | apt-key add - \
     && add-apt-repository 'deb https://apt.corretto.aws stable main' \
-    && mkdir -p /usr/share/man/man1 || true \
     && apt-get update \
     && apt-get install -y java-15-amazon-corretto-jdk=1:${CORRETTO_VERSION} \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false gnupg software-properties-common
