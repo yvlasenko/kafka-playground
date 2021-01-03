@@ -1,9 +1,9 @@
-name: Docker Image CI - scala
+name: Docker Image CI - cruise control
 
 on:
   push:
     paths:
-      - 'docker-scala/**'
+      - 'docker-cruise-control/**'
     branches:
       - master
   pull_request:
@@ -24,11 +24,10 @@ jobs:
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     - name: Build the Docker image
-      working-directory: docker-scala/
+      working-directory: docker-cruise-control/
       run: |
-        docker build . --file Dockerfile --tag yvlasenko/scala:$(grep -oP 'SCALA_VERSION=\K(.*)' Dockerfile)
-        docker build . --file Dockerfile --tag yvlasenko/scala:latest
+        docker build . --file Dockerfile --tag yvlasenko/cruise-control:latest
 
     - name: Docker Push
-      working-directory: docker-scala/
-      run: docker push yvlasenko/scala
+      working-directory: docker-cruise-control/
+      run: docker push yvlasenko/cruise-control
